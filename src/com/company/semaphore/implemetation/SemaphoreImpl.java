@@ -27,13 +27,13 @@ public class SemaphoreImpl implements Semaphore {
     }
 
     @Override
-    public void release() {
+    public void release() throws InterruptedException {
 
 
     }
 
     @Override
-    public void release(int permits) {
+    public void release(int permits) throws InterruptedException {
 
     }
 
