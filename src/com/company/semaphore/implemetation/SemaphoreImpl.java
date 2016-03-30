@@ -27,15 +27,17 @@ public class SemaphoreImpl implements Semaphore {
     }
 
     @Override
-    public synchronized void acquire() throws InterruptedException {
+    public synchronized void acquire(int permits) throws InterruptedException, IllegalArgumentException  {
+        checkNonNegativeArgument(permits);
+
         if (Thread.interrupted()) throw new InterruptedException();
 
         synchronized (this) {
             try {
-                while (permits <= 0) {
+                while (this.permits < permits) {
                     wait();
                 }
-                permits--;
+                this.permits++;
             } catch (InterruptedException e) {
                 notify();
                 throw e;
@@ -44,21 +46,24 @@ public class SemaphoreImpl implements Semaphore {
     }
 
     @Override
-    public synchronized void acquire(int permits) throws InterruptedException, IllegalArgumentException  {
+    public synchronized void acquire() throws InterruptedException {
+        acquire(1);
+    }
+
+    @Override
+    public synchronized void release(int permits) throws InterruptedException, IllegalArgumentException {
         checkNonNegativeArgument(permits);
 
+        for (int i = 0; i < permits; i++) {
+            notify();
+        }
+
+        this.permits += permits;
     }
 
     @Override
     public synchronized void release() throws InterruptedException {
-        permits++;
-        notify();
-    }
-
-    @Override
-    public void release(int permits) throws InterruptedException, IllegalArgumentException {
-        checkNonNegativeArgument(permits);
-
+        release(1);
     }
 
     @Override
