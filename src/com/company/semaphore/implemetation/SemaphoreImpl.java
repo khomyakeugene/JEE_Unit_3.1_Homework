@@ -8,16 +8,14 @@ import com.company.semaphore.interfaces.Semaphore;
 public class SemaphoreImpl implements Semaphore {
     private static final String INVALID_ARGUMENT_PATTERN = "%d is invalid argument";
 
+    private int startPermits;
     private int permits;
 
     public SemaphoreImpl(int permits) throws IllegalArgumentException  {
         checkNonNegativeArgument(permits);
 
+        this.startPermits = permits;
         this.permits = permits;
-    }
-
-    public SemaphoreImpl() throws IllegalAccessException {
-        this (0);
     }
 
     private void checkNonNegativeArgument(int argument) throws IllegalArgumentException {
@@ -33,10 +31,11 @@ public class SemaphoreImpl implements Semaphore {
 
         synchronized (this) {
             try {
-                while (this.permits < permits) {
+                int requiredPermits = permits > this.startPermits ? this.startPermits : permits;
+                while (this.permits < requiredPermits) {
                     wait();
                 }
-                this.permits -= permits;
+                this.permits -= requiredPermits;
             } catch (InterruptedException e) {
                 notify();
                 throw e;
@@ -53,11 +52,14 @@ public class SemaphoreImpl implements Semaphore {
     public synchronized void release(int permits) throws InterruptedException, IllegalArgumentException {
         checkNonNegativeArgument(permits);
 
-        for (int i = 0; i < permits; i++) {
+        int maxAvailableAdditionalPermits = this.startPermits - this.permits;
+        int availablePermits = permits < maxAvailableAdditionalPermits ? permits : maxAvailableAdditionalPermits;
+
+        for (int i = 0; i < availablePermits; i++) {
             notify();
         }
 
-        this.permits += permits;
+        this.permits += availablePermits;
     }
 
     @Override
@@ -67,6 +69,6 @@ public class SemaphoreImpl implements Semaphore {
 
     @Override
     public synchronized int getAvailablePermits() {
-        return permits;
+        return this.permits;
     }
 }
