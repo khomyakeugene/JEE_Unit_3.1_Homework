@@ -46,12 +46,11 @@ public class SemaphoreTest {
                 String threadName = Thread.currentThread().getName();
                 do {
                     int sleepInterval = random.nextInt(MAX_SLEEP_INTERVAL);
-                    int releasePermitsCount = random.nextInt((START_SEMAPHORE_PERMITS + 1 ) / 2);
+                    int releasePermitsCount = random.nextInt(START_SEMAPHORE_PERMITS / 2) + 1;
 
                     semaphore.release(releasePermitsCount);
 
                     System.out.println(String.format(THREAD_RELEASED_PERMITS_PATTERN, threadName, releasePermitsCount));
-
                     System.out.println(String.format(THREAD_STARTED_TO_SLEEP_PATTERN, threadName, sleepInterval,
                             semaphore.getAvailablePermits()));
                     Thread.sleep(sleepInterval);
