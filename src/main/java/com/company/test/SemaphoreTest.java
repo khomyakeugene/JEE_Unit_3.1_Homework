@@ -1,6 +1,6 @@
 package com.company.test;
 
-import com.company.semaphore.implemetation.SemaphoreImpl;
+import com.company.semaphore.SemaphoreImpl;
 
 import java.util.Random;
 import java.util.stream.IntStream;

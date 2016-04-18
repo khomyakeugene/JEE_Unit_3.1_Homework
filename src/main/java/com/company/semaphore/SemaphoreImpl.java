@@ -1,6 +1,4 @@
-package com.company.semaphore.implemetation;
-
-import com.company.semaphore.interfaces.Semaphore;
+package com.company.semaphore;
 
 /**
  * Created by Yevgen on 28.03.2016 as a part of the project "JEE_Unit_3_Homework".
@@ -43,7 +41,6 @@ public class SemaphoreImpl implements Semaphore {
         }
     }
 
-    //а почему всегда передается 1? меджик намбер?
     @Override
     public void acquire() throws InterruptedException {
         acquire(1);

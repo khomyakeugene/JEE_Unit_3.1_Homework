@@ -1,9 +1,9 @@
-package com.company.semaphore.interfaces;
+package com.company.semaphore;
 
 /**
  * Created by Yevgen on 28.03.2016 as a part of the project "JEE_Unit_3_Homework".
  */
-//отделять интерфейсы и реализации в разные пакеты - как по мне не нужно.
+
 public interface Semaphore {
     // Acquires a permit from this semaphore, blocking until one is available
     void acquire() throws InterruptedException;
