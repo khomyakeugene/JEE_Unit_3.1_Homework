@@ -8,8 +8,6 @@ import java.util.stream.IntStream;
 /**
  * Created by Yevgen on 30.03.2016 as a part of the project "JEE_Unit_3_Homework".
  */
-//Если есть тесты, то мейн не нужен. А тесты писать в специальном пакете test с обозначением, что это тестовый пакет (зелененький)
-    //на том же уровне, где и пакет java. Посмотри стандартную иерархию для мавен проекта.
 public class SemaphoreTest {
     private static final String THREAD_STARTED_PATTERN = "Thread <%s> started, %d permit(s) are (is) available";
     private static final String THREAD_STARTED_TO_SLEEP_PATTERN = "Thread <%s> started to sleep for %d ms (%d permit(s) are (is) available)";
