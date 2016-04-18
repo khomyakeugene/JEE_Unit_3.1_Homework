@@ -43,6 +43,7 @@ public class SemaphoreImpl implements Semaphore {
         }
     }
 
+    //а почему всегда передается 1? меджик намбер?
     @Override
     public void acquire() throws InterruptedException {
         acquire(1);
